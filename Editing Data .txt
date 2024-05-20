@@ -1,0 +1,74 @@
+
+
+1.Write a SQL query to delete customers from the UK and France. 
+	
+	DELETE
+	FROM customers
+	WHERE country IN ('UK', 'France');
+	
+2.Write a SQL query to increase the buyprice of products by %10.
+
+	UPDATE products
+	SET buyprice = buyprice * 1.10;
+	
+3.Write a SQL query to change the amount of the check 'HQ336336'  to 1200.
+
+	UPDATE payments
+	SET amount = 1200
+	WHERE checkNumber = 'HQ336336';
+	
+4.Write a SQL query to delete customers who have not placed any orders.
+
+	DELETE
+	FROM customers
+	WHERE customerNumber NOT IN 
+		(SELECT customerNumber
+		FROM orders);
+		
+5.Write a SQL query to change buyprice and quantityInStock of the product with ID S10_1949 to 52 and 500, respectively. 
+
+	UPDATE products SET buyPrice = 52,
+         quantityInStock = 500
+	WHERE productCode = 'S10_1949';
+	
+6.Write a SQL query to increase buyprice of products that start with S10 by 10%.
+
+	UPDATE products SET buyPrice = buyPrice * 1.10
+	WHERE productCode LIKE 'S10%';
+	
+7.Write a statement that shows 'US' if the office is in the US, otherwise 'not in the US'.
+
+	SELECT officeCode,
+        
+    CASE
+    WHEN country = 'USA' THEN
+    'USA'
+    ELSE 'not in the USA'
+    END AS OfficeLocation
+	FROM offices;
+	
+8.Write a statement that increases the creditlimit of customers from the US by 20% and the rest of the world by 10%.
+
+	UPDATE customers SET creditLimit = (CASE
+    WHEN country = 'USA' THEN
+    creditLimit * 1.2
+    ELSE creditLimit * 1.1 END);
+
+9.Write a statement that decreases the buyPrice of products that start with S10 by 10%, S12 by 12%, S18 by 18%, and the rest by 20%.
+
+	UPDATE products SET buyPrice = (CASE
+    WHEN productCode LIKE 'S10%' THEN
+    buyPrice * 0.9
+    WHEN productCode LIKE 'S12%' THEN
+    buyPrice * 0.88
+    WHEN productCode LIKE 'S18%' THEN
+    buyPrice * 0.82
+    ELSE buyPrice * 0.8 END);
+
+10.Write a statement that decreases the quantityOrdered (in the table of orderdetails) by 2% for products that starts with S18 and for the rest of the products by 1%.
+
+	UPDATE orderdetails SET quantityOrdered = (CASE
+    WHEN productCode LIKE 'S18%' THEN
+    quantityOrdered * 0.98
+    ELSE quantityOrdered * 0.99 END);
+	

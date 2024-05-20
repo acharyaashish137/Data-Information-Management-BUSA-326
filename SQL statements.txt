@@ -1,0 +1,76 @@
+
+
+1- Write a SQL statement that shows customers that are coming from the USA,  France, and  Norway.
+
+	SELECT *
+	FROM customers
+	WHERE country IN ('USA', 'France', 'Norway');
+
+2-  Write a SQL statement that shows customers that their credit limit is in the range of 50000.00 $ and  200000$. 
+
+	SELECT *
+	FROM customers
+	WHERE creditLimit>50000
+			AND creditLimit<200000
+				
+3- Write a SQL statement that shows customers that are not from the USA.
+
+	SELECT *
+	FROM customers
+	WHERE country <> 'USA';
+	
+Table of Employees:
+
+4- Write a SQL statement the shows the list of employees that their job title is Sales Rep.
+	
+	SELECT *
+	FROM employees
+	WHERE jobTitle='Sales Rep'
+	
+5-  Write a SQL statement the shows the list of employees that their first name either has four letters or less or starts by D.
+
+	SELECT *
+	FROM employees
+	WHERE length(firstName) <= 4
+			OR firstName LIKE 'D%';
+			
+6-  Write a SQL statement the shows the list of employees that they report to either employeeNumber 1002, 1056, or 1076.
+
+	SELECT *
+	FROM employees
+	WHERE reportsTo IN (1002, 1056, 1076);
+	
+Table of Products:
+
+7-  Write a SQL statement the shows the list of products that their productScale is one of the following values 1:18, 1:700, 1:50, 1:32.
+
+	SELECT *
+	FROM products
+	WHERE productScale IN('1:18', '1:700' , '1:50' , '1:32');
+	
+8- Write a SQL statement the shows the list of products that their name has Honda, or Porsche, Benz or Ford.
+
+	
+	SELECT *
+	FROM products
+	WHERE productName LIKE '%Honda%'
+			OR productName LIKE '%Porsche%'
+			OR productName LIKE '%Benz%'
+			OR productName LIKE '%Ford%';
+
+Table of Payments:
+
+9-  Write a SQL statement the shows the list of payments where checkNumber starts with HQ or OM.
+
+	SELECT *
+	FROM payments
+	WHERE checkNumber LIKE 'HQ%'
+			OR checkNumber LIKE 'OM%';
+			
+10-  Write a SQL statement the shows the list of payments that are not in the range of 4000 and 15000.
+
+	SELECT *
+	FROM payments
+	WHERE amount NOT
+		BETWEEN 4000
+			AND 15000;

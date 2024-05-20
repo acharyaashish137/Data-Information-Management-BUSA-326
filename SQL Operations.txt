@@ -1,0 +1,87 @@
+
+
+1. Write a query to show the detail of the customer with the highest credit limit.
+
+	SELECT customerName,
+         max(creditLimit)
+	FROM customers;
+	
+2.Write a query to show the number of payments from each customer. 
+
+	SELECT c.customerName,
+         
+    (SELECT count(*)
+    FROM payments p
+    WHERE p.customerNumber = c.customerNumber) as Payments
+	FROM customers c;
+
+3. Write a query to show the number of each customer's orders.
+
+	SELECT c.customerNumber,
+         
+    (SELECT count(*)
+    FROM orders o
+    WHERE c.customerNumber = o.customerNumber) as TotalOrders
+	FROM customers c;
+
+4.Write a query to show the number of customers from the USA that paid more than 50000.
+
+	SELECT COUNT(*) AS num_customers
+	FROM customers
+	WHERE country = 'USA'
+	AND customerNumber IN (
+		SELECT customerNumber
+		FROM payments
+		WHERE amount > 50000
+	);
+
+5.Write a query to show the number of employees in each office. 
+
+	SELECT officeCode, (
+    SELECT COUNT(*)
+    FROM employees
+    WHERE employees.officeCode = offices.officeCode
+	) AS employee_count
+	FROM offices
+
+6.Write a query to show the customers that have not placed any orders. 
+
+	SELECT *
+	FROM customers
+	WHERE customerNumber NOT IN (
+		SELECT customerNumber
+		FROM orders
+	)
+
+7. Write a query to show the orders that their value is more than 50000. (order value = quantityOrdered*priceEach)
+
+	SELECT orderNumber, (quantityOrdered * priceEach) AS orderValue
+	FROM orderdetails
+	WHERE (quantityOrdered * priceEach) > 50000;
+	
+8.Write a query to show the offices with more than four employees. 
+
+	SELECT officeCode, COUNT(*) AS numEmployees
+	FROM employees
+	GROUP BY officeCode
+	HAVING numEmployees > 4;
+	
+9.Write a query to show the products that have not been ordered. 
+
+	SELECT *
+	FROM products
+	WHERE productCode NOT IN (
+		SELECT DISTINCT productCode
+		FROM orderdetails
+	)
+
+10.Write a query to show the total money paid by each customer.
+
+	SELECT c.customerNumber,
+         c.customerName,
+         SUM(p.amount) AS total_money_paid
+	FROM customers c
+	JOIN payments p
+		ON c.customerNumber = p.customerNumber
+	GROUP BY  c.customerNumber, c.customerName
+	ORDER BY  total_money_paid DESC;

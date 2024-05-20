@@ -1,0 +1,93 @@
+
+
+1. Use the customers' table, and write a query statement to show CustomerName, state, and country columns.
+
+	SELECT customerName, state, country
+	FROM customers;
+
+2.Use the employees table, and write a query statement to show the employee living in the USA. 
+
+	SELECT *
+	FROM employees
+	WHERE officeCode IN 
+		(SELECT officeCode
+		FROM offices
+		WHERE country = 'USA');
+		
+3.Join tables customers, orders, orderdetails and product to show the customer name and the name of products they have ordered.
+
+	SELECT c.customerName,
+         p.productName
+	FROM customers c
+	JOIN orders o
+		ON c.customerNumber = o.customerNumber
+	JOIN orderdetails od
+		ON o.orderNumber = od.orderNumber
+	JOIN products p
+		ON od.productCode = p.productCode;
+		
+4. Use subquery and find the detail of the most expensive product in the table of products. 
+
+	SELECT *
+	FROM products
+	WHERE buyPrice = (SELECT MAX(buyPrice) FROM products);
+
+5.se the orders & orderdetails tables and find the total order values per customer. Hint: Use group by clause and an aggregation function.
+
+	SELECT o.customerNumber,
+         SUM(od.quantityOrdered * od.priceEach) AS totalOrderValue
+	FROM orders o
+	JOIN orderdetails od
+		ON o.orderNumber = od.orderNumber
+	GROUP BY  o.customerNumber;
+	
+6. Use subquery and show details of the customers that have not placed any orders. If a customer (i.e., its CustomerNumber) is not in the table of orders, that means the customer has not placed any orders.
+
+	SELECT *
+	FROM customers
+	WHERE customerNumber NOT IN 
+		(SELECT DISTINCT customerNumber
+		FROM orders);
+		
+7.Use the Delete statement to remove products that have not been ordered by any customers. Hint: A product that is not in the table of order_details means the product has not been ordered, find (without duplicate) those products.
+
+	DELETE
+	FROM products
+	WHERE productCode NOT IN 
+		(SELECT DISTINCT productCode
+		FROM orderdetails);
+		
+8.Use Update and Case Statements to increase the retail price (under column buyprice) of products that are from productline classic cars and vintage cars by 10% and the rest of the products by 5%. 
+
+	UPDATE products SET buyPrice =
+		CASE
+		WHEN productLine IN ('Classic Cars', 'Vintage Cars') THEN
+		buyPrice * 1.1
+		ELSE buyPrice * 1.05 END;
+		
+9.Show the total payments of each customer in each year.
+
+	SELECT customerNumber,
+         YEAR(paymentDate) AS paymentYear,
+         SUM(amount) AS totalPayment
+	FROM payments
+	GROUP BY  customerNumber, YEAR(paymentDate)
+	ORDER BY  customerNumber, paymentYear;
+	
+10.Show the number of orders from each US customer.
+
+	SELECT c.customerNumber,
+         c.customerName,
+         COUNT(o.orderNumber) AS numberOfOrders
+	FROM customers c
+	LEFT JOIN orders o
+		ON c.customerNumber = o.customerNumber
+	WHERE c.country = 'USA'
+	GROUP BY  c.customerNumber, c.customerName
+	ORDER BY  numberOfOrders DESC;
+
+
+
+	
+
+

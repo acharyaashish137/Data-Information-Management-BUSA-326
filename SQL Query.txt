@@ -1,0 +1,132 @@
+
+
+1.Write a query to show payments that each customer has made so far. Show Customer name, check number, and payment date.
+	
+	SELECT 
+		c.customerName,
+        p.checkNumber,
+        p.paymentDate,
+        p.amount
+	FROM payments AS p
+	INNER JOIN customers AS c
+		ON c.customerNumber = p.customerNumber;
+	
+
+
+2.Write a query to show orders made by each customer has made so far. Show Customer name, Order date, Required date, and Shipped date.
+
+	SELECT
+		c.customerName,
+		o.orderDate,
+		o.requiredDate,
+		o.shippedDate
+	FROM
+		customers c
+	JOIN
+		orders o ON c.customerNumber = o.customerNumber;
+
+
+3.Write a query to show the office location of each employee. Show employee's first and last name, addressline1, state, country.
+
+	SELECT
+		e.firstName,
+		e.lastName,
+		o.addressLine1,
+		o.state,
+		o.country
+	FROM
+		employees e
+	JOIN
+		offices o ON e.officeCode = o.officeCode;
+		
+
+
+4. Write a query to show the name of the products for each order. Show ordernumber, orderdate, and productname.
+
+	SELECT 
+		od.orderNumber,
+        o.orderDate,
+        p.productName
+	FROM orders o
+	INNER JOIN orderdetails od
+		ON od.orderNumber = o.orderNumber
+	INNER JOIN products p
+		ON od.productCode = p.productCode ;
+
+
+5.Write a query to show the product code, product name, and image of the product line (join products and productlines).
+
+	SELECT 
+		p.productCode,
+		p.productName,
+		pl.image
+	FROM productlines pl
+	INNER JOIN products p
+		ON p.productLine = pl.productLine;
+
+6.Write a query to show the customer number, payment amount, and order number (join three tables; orders, customers, and payments). 
+
+	SELECT 
+		c.customerNumber,
+        p.amount,
+        o.orderNumber
+	FROM customers c
+	INNER JOIN payments p
+		ON c.customerNumber = p.customerNumber
+	INNER JOIN orders o
+		ON o.customerNumber = c.customerNumber;
+
+
+
+
+7.Write a query to show the order number, customer number, and customers' city
+
+	SELECT
+		o.orderNumber,
+		o.customerNumber,
+		c.city
+	FROM
+		orders o
+	JOIN
+		customers c ON o.customerNumber = c.customerNumber;
+
+8.Write a query to show customers and their possible payments. (show all customers and their payments if they have any.)  
+
+	SELECT
+		c.customerNumber,
+		c.customerName,
+		p.checkNumber,
+		p.paymentDate,
+		p.amount
+	FROM
+		customers c
+	LEFT JOIN
+		payments p ON c.customerNumber = p.customerNumber;
+		
+9.Write a query to show customers and their possible orders. (show all customers and their orders if they have any.). 
+
+	SELECT
+		c.customerNumber,
+		c.customerName,
+		o.orderNumber,
+		o.orderDate,
+		o.requiredDate,
+		o.shippedDate
+	FROM
+		customers c
+	LEFT JOIN
+		orders o ON c.customerNumber = o.customerNumber;
+		
+10.Write a query to show products and their possible orders. (show all products and their orders if they have any.) 
+
+	SELECT
+		p.productCode,
+		p.productName,
+		od.orderNumber,
+		od.quantityOrdered,
+		od.priceEach
+	FROM
+		products p
+	LEFT JOIN
+		orderdetails od ON p.productCode = od.productCode;
+

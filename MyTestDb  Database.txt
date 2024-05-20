@@ -1,0 +1,48 @@
+
+
+Q.1// Creating database name MyTestDb 
+
+	CREATE DATABASE MyTestDb;
+
+Q.2 //Create the table of Authors
+	
+	use MyTestDb;
+	
+	CREATE TABLE Authors (
+	AID int,
+	AFName varchar(32),
+	ALName varchar(32),
+	AStAddress varchar(32),
+	ACity varchar(32),
+	AState varchar(32),
+	AZipcode varchar(32),
+	ADOB Date,
+	primary key(AID));
+
+Q.3//Create the table of Books
+	
+	use MyTestDb;
+	
+	CREATE Table Books(
+	BID int primary key,
+	BName varchar(32),
+	BISBN varchar(32),
+	BPDate date,
+	AID int,
+	foreign key(AID) references Authors(AID));
+
+Q.4//Add at least two authors to the table of Authors
+
+	use MyTestDb;
+	
+	insert into Authors values(001, 'Charles', 'Miles', '3368  Angel  Lane', 'Houston', 'Tx', '77045', '1985-05-12');
+	insert into Authors values(002, 'Harry', 'Sherman', '5346 Pine Forest Road', 'Houston', 'Tx', '77056', '1974-09-25');
+
+Q.5//Add at least four Books to the table of Books
+
+	use MyTestDb;
+	
+	insert into Books values(9901, 'Extinction Everyday', '723723', '1997-01-18',001);
+	insert into Books values(9902, 'No Fear', '129387', '2002-02-14',002);
+	insert into Books values(9903, 'Are We Alone?', '319283', '2001-04-21',001);
+	insert into Books values(9904, 'All is Well', '109883', '2015-06-12',002);
